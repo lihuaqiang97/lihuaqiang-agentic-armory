@@ -1,16 +1,17 @@
-# 🧩 平台技能 (Skills)
+# 🧩 技能定义 (Skills)
 
-本目录存放各平台特定格式的 Skill 定义。
+本目录存放抽象的技能定义，与具体平台无关。每个技能包含提示词、脚本和元数据。
 
 ## 结构
 
 ```
 skills/
-├── claude-code/  # Claude Code Skills
-├── cursor/       # Cursor Rules
+├── blog-writer/       #   博客写作技能
+│   ├── SKILL.md       #     技能描述与元数据
+│   └── scripts/       #     配套脚本
 └── README.md
 ```
 
 ## 使用方式
 
-在对应平台的配置文件中引用本目录路径即可。
+各平台适配器（见 `harness/runners/`）会读取本目录的技能定义，转换为目标平台所需格式。

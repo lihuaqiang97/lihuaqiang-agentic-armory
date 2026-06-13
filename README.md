@@ -53,8 +53,8 @@
 | 层级 | 形式 | 说明 | 跨平台性 |
 | :--- | :--- | :--- | :--- |
 | **Prompts** | 纯 Markdown 文本 | 最基础的 System Prompt，不依赖任何平台 | ✅ 完全通用 |
+| **Skills** | 结构化定义（Markdown + 元数据 + 脚本） | 抽象的技能描述，通过适配器转换为各平台格式 | ✅ 平台无关 |
 | **Harness** | Python / Shell 脚本 | 包裹 Agent 的执行逻辑（输入处理、调用、输出解析、重试等） | ✅ 脚本通用，需适配调用方式 |
-| **Skills** | 平台特定格式（JSON/YAML + 提示词） | Claude Code Skills、Cursor Rules 等平台原生格式 | ⚠️ 平台绑定，但底层提示词可复用 |
 | **MCP Servers** | 独立服务进程 | Model Context Protocol 服务器，提供工具能力 | ✅ 标准协议，理论上通用 |
 
 **设计原则：Prompt 是核心资产，Harness 是工程化封装，Skills 和 MCP 是平台适配层。**
@@ -80,12 +80,10 @@ lihuaqiang-agentic-armory/
 │   ├── utils/                  #   工具函数
 │   └── README.md
 │
-├── skills/                     # 平台特定 Skills
-│   ├── claude-code/            #   Claude Code Skills
-│   │   └── blog-writer/
-│   │       ├── SKILL.md
-│   │       └── scripts/
-│   ├── cursor/                 #   Cursor Rules
+├── skills/                     # 抽象技能定义（平台无关）
+│   ├── blog-writer/            #   博客写作技能
+│   │   ├── SKILL.md            #     技能描述与元数据
+│   │   └── scripts/            #     配套脚本
 │   └── README.md
 │
 ├── mcp_servers/                # MCP 服务器
@@ -127,22 +125,14 @@ cat prompts/blog-writer/system.md
 # 复制输出内容到你的 ChatGPT / Claude / Codex 对话框
 ```
 
-### 3. 配置 Claude Code Skills
+### 3. 通过 Harness 适配器使用 Skills
 
-```bash
-# 在 Claude Code 中引用本仓库的 Skills
-# 编辑 ~/.claude/settings.json，添加：
-{
-  "skills": ["path/to/lihuaqiang-agentic-armory/skills/claude-code"]
-}
-```
-
-### 4. 运行 Harness 脚本
+`harness/runners/` 中的适配器会读取 `skills/` 目录的技能定义，转换为你目标平台所需的格式。
 
 ```bash
 cd harness
 pip install -r requirements.txt
-python runners/claude_code.py --skill blog-writer --input "写一篇关于 Rust 所有权的文章"
+python runners/base.py --skill blog-writer --platform claude-code --input "写一篇关于 Rust 所有权的文章"
 ```
 
 ---

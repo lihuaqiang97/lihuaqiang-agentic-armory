@@ -45,8 +45,8 @@ Core objectives:
 | Layer | Format | Description | Cross-Platform |
 | :--- | :--- | :--- | :--- |
 | **Prompts** | Pure Markdown | Core System Prompts, no platform dependency | ✅ Universal |
+| **Skills** | Structured definitions (Markdown + metadata + scripts) | Abstract skill definitions, converted to platform formats via adapters | ✅ Platform-agnostic |
 | **Harness** | Python / Shell | Execution logic wrapping agents (input handling, invocation, output parsing, retry) | ✅ Scripts are portable |
-| **Skills** | Platform-specific | Claude Code Skills, Cursor Rules, etc. | ⚠️ Platform-bound, but core prompts are reusable |
 | **MCP Servers** | Standalone services | Model Context Protocol servers for tool capabilities | ✅ Standard protocol |
 
 **Design principle: Prompts are the core asset. Harness is the engineering wrapper. Skills and MCP are the platform adaptation layer.**
@@ -58,8 +58,8 @@ Core objectives:
 ```
 lihuaqiang-agentic-armory/
 ├── prompts/          # Core Prompt Library
-├── harness/          # Execution Scripts (Platform-agnostic)
-├── skills/           # Platform-specific Skills
+├── skills/           # Abstract Skill Definitions (Platform-agnostic)
+├── harness/          # Execution Scripts & Adapters
 ├── mcp_servers/      # MCP Servers
 ├── docs/             # Documentation
 ├── tests/            # Tests
@@ -84,21 +84,14 @@ cd lihuaqiang-agentic-armory
 
 Copy any `.md` from `prompts/` into your AI tool.
 
-### 3. Configure Claude Code Skills
+### 3. Use Skills via Harness Adapters
 
-```json
-// ~/.claude/settings.json
-{
-  "skills": ["path/to/lihuaqiang-agentic-armory/skills/claude-code"]
-}
-```
-
-### 4. Run Harness Scripts
+Adapters in `harness/runners/` read skill definitions from `skills/` and convert them to your target platform's format.
 
 ```bash
 cd harness
 pip install -r requirements.txt
-python runners/claude_code.py --skill blog-writer --input "Write about Rust ownership"
+python runners/base.py --skill blog-writer --platform claude-code --input "Write about Rust ownership"
 ```
 
 ---
