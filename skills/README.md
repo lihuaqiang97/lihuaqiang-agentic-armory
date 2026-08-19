@@ -18,10 +18,10 @@ skills/
 
 # skill 收集
 
-- (ui-ux-pro-max-skill)[https://github.com/nextlevelbuilder/ui-ux-pro-max-skill]
+- [ui-ux-pro-max-skill](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill)
   - https://www.uupm.cc/demo/educational-platform
     - 这种风格颜色再简单一点就好了，黑白加上这种拟态的按钮，感觉效果会很好，后续自己改造一下这个skill的这种风格。
-- (shadcn-ui)[https://github.com/shadcn-ui/ui]
+- [shadcn-ui](https://github.com/shadcn-ui/ui)
   - 简约的黑白风格，很不错。
-- (taste-skill)[https://github.com/Leonxlnx/taste-skill]
+- [taste-skill](https://github.com/Leonxlnx/taste-skill)
   - 听说好用，但是还没实际试用过效果。
