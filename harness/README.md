@@ -18,3 +18,6 @@ cd harness
 pip install -r requirements.txt
 python runners/claude_code.py --skill blog-writer --input "你的任务描述"
 ```
+
+# 系统提示词收集
+- [system_prompts_leaks](https://github.com/asgeirtj/system_prompts_leaks)
